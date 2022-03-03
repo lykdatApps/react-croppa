@@ -2,10 +2,18 @@
     "name": "react-croppa",
     "version": "1.0.0",
     "description": "Simple react component for cropping images.",
-    "main": "./lib/index.js",
-    "types": "./lib/index.d.ts",
+    "main": "./src/index.js",
+    "types": "./src/index.d.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "jest --config jestconfig.json",
+        "build": "tsc",
+        "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+        "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\"",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm test && npm run lint",
+        "preversion": "npm run lint",
+        "version": "npm run format && git add -A src",
+        "postversion": "git push && git push --tags"
     },
     "keywords": [
         "cropper",
@@ -17,6 +25,14 @@
     ],
     "author": "solomon@lykdat.com",
     "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/lykdatApps/react-croppa/issues"
+    },
+    "homepage": "https://github.com/lykdatApps/react-croppa/#readme",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lykdatApps/react-croppa.git"
+    },
     "dependencies": {
         "body-scroll-lock": "^4.0.0-beta.0",
         "react": "^17.0.2",
@@ -24,13 +40,20 @@
     },
     "devDependencies": {
         "@types/body-scroll-lock": "^3.1.0",
+        "@types/jest": "^27.4.1",
         "@types/react": "^16.14.23",
         "@types/react-dom": "^16.0.5",
+        "@typescript-eslint/eslint-plugin": "^5.13.0",
+        "eslint": "^8.10.0",
+        "eslint-config-prettier": "^8.5.0",
+        "jest": "^27.5.1",
+        "prettier": "^2.5.1",
         "react": "^16.12.0",
         "react-dom": "^16.12.0",
-        "typescript": "^2.8.3"
+        "ts-jest": "^27.1.3",
+        "typescript": "^4.6.2"
     },
     "files": [
-        "dist"
+        "dist/**/*"
     ]
 }

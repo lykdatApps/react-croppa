@@ -11,14 +11,14 @@ export interface Props {
     minHeight?: number
     handleSize?: number
     initialBorderSize?: number
-    onCropComplete: (cropped: CropperOutput) => any
+    onCropComplete: (cropped: CropperOutput) => void
     readyToUse: boolean
 }
 
-const Cropper: React.FC<Props> = (props) => {
+function Cropper(props: Props) {
     const {
         imageUrl,
-        initialBorderSize = 0,
+        // initialBorderSize = 0,
         onCropComplete,
         readyToUse
     } = props
@@ -45,7 +45,6 @@ const Cropper: React.FC<Props> = (props) => {
     //     height: imd.height - adjustedInitialBorderSize * 2,
     //     width: imd.width - adjustedInitialBorderSize * 2
     // })
-
     useEffect(() => {
         if (readyToUse) {
             onFinish()

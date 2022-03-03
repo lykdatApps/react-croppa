@@ -1,7 +1,7 @@
 import { setBoundingBox } from './setters'
 import { adjustPosition } from './utils'
 
-export function createImage(url: string, setCors: boolean = true) {
+export function createImage(url: string, setCors = true) {
     return new Promise((resolve: (value: HTMLImageElement) => void, reject) => {
         const image = new Image()
         image.addEventListener('load', () => resolve(image))
@@ -19,7 +19,7 @@ export async function crop(
     imageURL: string,
     pixelCrop: Dimensions,
     imageSpec: Dimensions
-) {
+): Promise<Blob | null | undefined> {
     const image = await createImage(imageURL)
     const canvas = document.createElement('canvas')
     const { width, height, left, top } = imageSpec
@@ -63,9 +63,7 @@ export async function crop(
         )
 
         // As a blob
-        return await new Promise((resolve) =>
-            canvas.toBlob(resolve, 'image/jpeg')
-        )
+        return canvasToBlob(canvas)
     } catch (error) {
         console.log(error)
     }
@@ -86,11 +84,11 @@ export async function finishCropping(
 export function resizeImage(scaleSpec: ScaleSpec): Dimensions {
     const [imgHeight, containerHeight] = scaleSpec.height
     const [imgWidth, containerWidth] = scaleSpec.width
-    let isFullHeight,
+    let isFullHeight = false,
         isFullWidth = false
-    let height,
-        width,
-        widthExcess,
+    let height = 0,
+        width = 0,
+        widthExcess = 0,
         heightExcess = 0
     if (!(imgHeight && imgWidth)) {
         height = containerWidth
@@ -136,4 +134,10 @@ export function resizeImage(scaleSpec: ScaleSpec): Dimensions {
         isFullHeight,
         isFullWidth
     }
+}
+
+function canvasToBlob(canvas: HTMLCanvasElement) {
+    return new Promise<Blob | null>(function (resolve) {
+        canvas.toBlob(resolve)
+    })
 }

@@ -2,27 +2,8 @@ import React from 'react'
 
 export function getLimit(limitFirstVal: number, limitSecondVal: number) {
     let limit: number[] = []
-    return (limit = [limitFirstVal, limitSecondVal])
-}
-
-export function getNewCropTop(newCropTopVal: number): number {
-    let newCropTop: number
-    return (newCropTop = newCropTopVal)
-}
-
-export function getNewCropHeight(newCropHeightVal: number): number {
-    let newCropHeight: number
-    return (newCropHeight = newCropHeightVal)
-}
-
-export function getNewCropWidth(newCropWidthVal: number): number {
-    let newCropWidth: number
-    return (newCropWidth = newCropWidthVal)
-}
-
-export function getNewCropLeft(newCropLeftVal: number): number {
-    let newCropLeft: number
-    return (newCropLeft = newCropLeftVal)
+    limit = [limitFirstVal, limitSecondVal]
+    return limit
 }
 
 export function getClientPosition(

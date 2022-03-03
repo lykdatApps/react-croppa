@@ -11,8 +11,8 @@ export function validateFileSize(file: File): {
 }
 
 export function deepEqual(
-    x: Record<string, unknown>,
-    y: Record<string, unknown>
+    x: Record<string, any>,
+    y: Record<string, any>
 ): boolean {
     // note that this function is naive in the sense that it expects that no key-pair value
     // should have an 'object' value

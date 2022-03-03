@@ -1,9 +1,12 @@
+import React from 'react'
 import { getHandleStyle } from './helpers/utils'
 
 export interface Props {
     styles: CropperStyles['handles']
     edges: Edge[]
-    onEdgeGrab: (edge: string) => (evt: any) => void
+    onEdgeGrab: (
+        edge: string
+    ) => (evt: React.MouseEvent | React.TouchEvent) => void
     onDrop: () => void
     onDrag: (evt: React.MouseEvent | React.TouchEvent) => void
 }

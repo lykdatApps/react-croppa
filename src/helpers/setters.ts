@@ -1,22 +1,14 @@
-import {
-    getLimit,
-    getNewCropTop,
-    getNewCropHeight,
-    getNewCropLeft,
-    getNewCropWidth
-} from './getters'
-
 export function setTop(
     limitFirstVal: number,
     limitSecondVal: number,
     clientY: number,
     newCropHeightVal: number
 ): [number, number] {
-    const limit = getLimit(limitFirstVal, limitSecondVal)
+    const limit = [limitFirstVal, limitSecondVal]
     const newCropTopVal =
         clientY < limit[0] ? limit[0] : Math.min(clientY, limit[1])
-    const newCropTop = getNewCropTop(newCropTopVal)
-    const newCropHeight = getNewCropHeight(newCropHeightVal - newCropTop)
+    const newCropTop = newCropTopVal
+    const newCropHeight = newCropHeightVal - newCropTop
     return [newCropTop, newCropHeight]
 }
 
@@ -26,11 +18,11 @@ export function setRight(
     clientX: number,
     crop: Dimensions
 ): number {
-    const limit = getLimit(limitFirstVal, limitSecondVal)
+    const limit = [limitFirstVal, limitSecondVal]
     const newCropWidthVal =
         (clientX < limit[0] ? limit[0] : Math.min(limit[1], clientX)) -
         crop.left
-    return getNewCropWidth(newCropWidthVal)
+    return newCropWidthVal
 }
 
 export function setBottom(
@@ -39,10 +31,10 @@ export function setBottom(
     clientY: number,
     crop: Dimensions
 ): number {
-    const limit = getLimit(limitFirstVal, limitSecondVal)
+    const limit = [limitFirstVal, limitSecondVal]
     const newCropHeightVal =
         (clientY < limit[0] ? limit[0] : Math.min(clientY, limit[1])) - crop.top
-    return getNewCropHeight(newCropHeightVal)
+    return newCropHeightVal
 }
 
 export function setLeft(
@@ -51,12 +43,11 @@ export function setLeft(
     clientX: number,
     crop: Dimensions
 ): [number, number] {
-    const limit = getLimit(limitFirstVal, limitSecondVal)
+    const limit = [limitFirstVal, limitSecondVal]
     const newCropLeftVal =
         clientX < limit[0] ? limit[0] : Math.min(clientX, limit[1])
-    const newCropLeft = getNewCropLeft(newCropLeftVal)
-    const newCropWidth = crop.width + crop.left - newCropLeft
-    return [newCropLeft, newCropWidth]
+    const newCropWidth = crop.width + crop.left - newCropLeftVal
+    return [newCropLeftVal, newCropWidth]
 }
 
 export function setCropByCase(

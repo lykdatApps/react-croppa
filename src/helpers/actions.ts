@@ -40,8 +40,8 @@ export function drag(
 export function dragFrom(
     edge: string,
     setActiveCropEdge: React.Dispatch<React.SetStateAction<string>>
-): (evt: any) => void {
-    return (evt: any) => {
+): (evt: React.MouseEvent | React.TouchEvent) => void {
+    return (evt: React.MouseEvent | React.TouchEvent) => {
         evt.preventDefault()
         evt.stopPropagation()
         setActiveCropEdge(edge)
