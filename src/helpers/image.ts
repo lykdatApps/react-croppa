@@ -24,19 +24,11 @@ export async function crop(
     const canvas = document.createElement('canvas')
     const { width, height, left, top } = imageSpec
     const { naturalWidth, naturalHeight } = image
-    const x1 = pixelCrop.left - left === 10 ? 0 : pixelCrop.left - left
-    const y1 = pixelCrop.top - top === 10 ? 0 : pixelCrop.top - top
+    const { width: cropWidth, height: cropHeight } = pixelCrop
+    const x1 = pixelCrop.left - left
+    const y1 = pixelCrop.top - top
     const x1Ratio = x1 / width
     const y1Ratio = y1 / height
-    const cropWidth =
-        width - pixelCrop.width + pixelCrop.left === 10
-            ? width
-            : pixelCrop.width + 10
-    const cropHeight =
-        height - pixelCrop.height + pixelCrop.top === 10
-            ? height
-            : pixelCrop.height + 10
-
     const xDeltaRatio = cropWidth / width
     const yDeltaRatio = cropHeight / height
     const sourceX = x1Ratio * naturalWidth
