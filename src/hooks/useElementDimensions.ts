@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { deepEqual } from '../helpers/utils'
+import { config } from '../config'
 
 /**
  *
@@ -10,9 +11,10 @@ import { deepEqual } from '../helpers/utils'
 export function useElementDimensions(
     ref: React.RefObject<HTMLElement>,
     deps: any[] = []
-): Dimensions | null {
-    const [elementDimensions, setElementDimensions] =
-        useState<Dimensions | null>(null)
+): Dimensions {
+    const [elementDimensions, setElementDimensions] = useState<Dimensions>(
+        config.zeroDimensions
+    )
 
     const effectAction = () => {
         if (ref && ref.current) {
@@ -24,6 +26,7 @@ export function useElementDimensions(
             }
 
             if (
+                !elementDimensions ||
                 !deepEqual(
                     elementDimensions as any,
                     newElementDimensions as any
@@ -34,9 +37,7 @@ export function useElementDimensions(
         }
     }
 
-    deps.length
-        ? useEffect(effectAction, [...deps, ref])
-        : useEffect(effectAction)
+    useEffect(effectAction, [...deps, ref])
 
     return elementDimensions
 }

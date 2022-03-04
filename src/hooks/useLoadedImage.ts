@@ -1,17 +1,29 @@
-import { useEffect, useState } from 'react'
+import {
+    useEffect,
+    useState,
+    Dispatch,
+    SetStateAction,
+    MutableRefObject
+} from 'react'
+import { config } from '../config'
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { resizeImage } from '../helpers/image'
 import { useElementDimensions } from './useElementDimensions'
 
 interface Params {
-    boxRef: React.MutableRefObject<HTMLDivElement | null>
-    imageRef: React.MutableRefObject<HTMLImageElement | null>
+    boxRef: MutableRefObject<HTMLDivElement | null>
+    imageRef: MutableRefObject<HTMLImageElement | null>
     deps: any[]
 }
 
-export function useScaledImage(params: Params): Dimensions | null {
+export function useLoadedImage(
+    params: Params
+): [Dimensions, Dimensions, Dispatch<SetStateAction<Dimensions>>] {
     const { boxRef, imageRef, deps } = params
-    const [imageSpec, setImageSpec] = useState(useElementDimensions(imageRef))
+    const [imageSpec, setImageSpec] = useState<Dimensions>(
+        config.zeroDimensions
+    )
+    const [cropSpec, setCropSpec] = useState<Dimensions>(config.zeroDimensions)
     const boxDimensions = useElementDimensions(boxRef)
 
     useEffect(() => {
@@ -26,12 +38,13 @@ export function useScaledImage(params: Params): Dimensions | null {
             height: [image.naturalHeight, boxDimensions.height],
             width: [image.naturalWidth, boxDimensions.width]
         }
-
-        setImageSpec(resizeImage(scaleSpec))
+        const resizedImageSpec = resizeImage(scaleSpec)
+        setImageSpec(resizedImageSpec)
+        setCropSpec(resizedImageSpec)
         // disable scrolls from weird iOS scroll behaviour
         disableBodyScroll(imageRef.current)
         // re-enable scroll after unmount
         return () => clearAllBodyScrollLocks()
     }, [...deps])
-    return imageSpec
+    return [imageSpec, cropSpec, setCropSpec]
 }

@@ -1,3 +1,5 @@
+import { config } from '../config'
+
 export function setTop(
     limitFirstVal: number,
     limitSecondVal: number,
@@ -53,63 +55,54 @@ export function setLeft(
 export function setCropByCase(
     activeCropEdge: string,
     imageDetails: Dimensions,
-    halfHandle: number,
-    crop: Dimensions,
-    tripleHandle: number,
     clientX: number,
     clientY: number,
     setCrop: React.Dispatch<React.SetStateAction<Dimensions>>
 ): void {
     switch (activeCropEdge) {
         case 'top':
-            const [newCropTop, newCropHeightTop] = setTop(
-                imageDetails.top + halfHandle,
-                crop.top + crop.height - tripleHandle,
-                clientY,
-                crop.height + crop.top
-            )
-            setCrop((oldCrop) => ({
-                ...oldCrop,
-                top: newCropTop,
-                height: newCropHeightTop
-            }))
+            setCrop((oldCrop) => {
+                const [top, height] = setTop(
+                    imageDetails.top,
+                    oldCrop.top + oldCrop.height - config.minCrop,
+                    clientY,
+                    oldCrop.height + oldCrop.top
+                )
+                return { ...oldCrop, top, height }
+            })
             break
         case 'right':
-            const newCropWidthRight = setRight(
-                crop.left + tripleHandle,
-                imageDetails.left + imageDetails.width - halfHandle,
-                clientX,
-                crop
-            )
-            setCrop((oldCrop) => ({
-                ...oldCrop,
-                width: newCropWidthRight
-            }))
+            setCrop((oldCrop) => {
+                const width = setRight(
+                    oldCrop.left + config.minCrop,
+                    imageDetails.left + imageDetails.width,
+                    clientX,
+                    oldCrop
+                )
+                return { ...oldCrop, width }
+            })
             break
         case 'bottom':
-            const newCropHeightBottom = setBottom(
-                crop.top + tripleHandle,
-                imageDetails.top + imageDetails.height - halfHandle,
-                clientY,
-                crop
-            )
-            setCrop((oldCrop) => ({
-                ...oldCrop,
-                height: newCropHeightBottom
-            }))
+            setCrop((oldCrop) => {
+                const height = setBottom(
+                    oldCrop.top + config.minCrop,
+                    imageDetails.top + imageDetails.height,
+                    clientY,
+                    oldCrop
+                )
+                return { ...oldCrop, height }
+            })
             break
         case 'left':
-            const [newCropLeft, newCropWidth] = setLeft(
-                imageDetails.left + halfHandle,
-                crop.left + crop.width - tripleHandle,
-                clientX,
-                crop
-            )
-            setCrop((oldCrop) => ({
-                ...oldCrop,
-                left: newCropLeft,
-                width: newCropWidth
-            }))
+            setCrop((oldCrop) => {
+                const [left, width] = setLeft(
+                    imageDetails.left,
+                    oldCrop.left + oldCrop.width - config.minCrop,
+                    clientX,
+                    oldCrop
+                )
+                return { ...oldCrop, left, width }
+            })
             break
         default:
             break

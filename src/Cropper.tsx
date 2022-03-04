@@ -1,50 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { config } from './config'
-import { useElementDimensions, useScaledImage } from './hooks'
+import { useElementDimensions, useLoadedImage } from './hooks'
 import { drag, dragFrom } from './helpers/actions'
 import { finishCropping } from './helpers/image'
 import { CropHandles } from './CropHandleGroup'
 
 export interface Props {
-    className?: string
     imageUrl: string
-    minHeight?: number
-    handleSize?: number
-    initialBorderSize?: number
     onCropComplete: (cropped: CropperOutput) => void
     readyToUse: boolean
 }
 
-function Cropper(props: Props) {
-    const {
-        imageUrl,
-        // initialBorderSize = 0,
-        onCropComplete,
-        readyToUse
-    } = props
-    const halfHandleWidth = config.handleConfig.width / 2
-    // const adjustedInitialBorderSize = Math.max(
-    //     initialBorderSize,
-    //     halfHandleWidth
-    // )
+const Cropper: React.FC<Props> = (props: Props) => {
+    const { imageUrl, onCropComplete, readyToUse } = props
     const cropperRef = useRef<HTMLDivElement | null>(null)
     const imageRef = useRef<HTMLImageElement | null>(null)
-    const [activeCropEdge, setActiveCropEdge] = useState('')
+    const [activeEdge, setActiveEdge] = useState('')
     const [imageLoaded, setImageLoaded] = useState(false)
     const cropperDimensions = useElementDimensions(cropperRef)
-    const scaledImageSpec =
-        useScaledImage({
-            boxRef: cropperRef,
-            imageRef,
-            deps: [imageLoaded, imageRef]
-        }) || config.imageSpec
-    const [crop, setCrop] = useState(config.cropSpec)
-    // setCrop({
-    //     top: imd.top + adjustedInitialBorderSize,
-    //     left: imd.left + adjustedInitialBorderSize,
-    //     height: imd.height - adjustedInitialBorderSize * 2,
-    //     width: imd.width - adjustedInitialBorderSize * 2
-    // })
+    const [scaledImageSpec, crop, setCrop] = useLoadedImage({
+        boxRef: cropperRef,
+        imageRef,
+        deps: [imageLoaded, imageRef]
+    })
+
     useEffect(() => {
         if (readyToUse) {
             onFinish()
@@ -52,24 +31,15 @@ function Cropper(props: Props) {
     }, [readyToUse])
 
     const onDrop = () => {
-        setActiveCropEdge('')
+        setActiveEdge('')
     }
 
     const onDrag = (evt: React.MouseEvent | React.TouchEvent) => {
-        drag(
-            evt,
-            cropperDimensions,
-            activeCropEdge,
-            scaledImageSpec,
-            halfHandleWidth,
-            crop,
-            30,
-            setCrop
-        )
+        drag(evt, cropperDimensions, activeEdge, scaledImageSpec, crop, setCrop)
     }
 
     const onEdgeGrab = (edge: string) => {
-        return dragFrom(edge, setActiveCropEdge)
+        return dragFrom(edge, setActiveEdge)
     }
 
     const onFinish = () => {
@@ -94,7 +64,7 @@ function Cropper(props: Props) {
     return (
         <div>
             <div>{config.hint}</div>
-            <div ref={cropperRef}>
+            <div style={config.styles.container} ref={cropperRef}>
                 <img
                     style={config.styles.image}
                     src={imageUrl}
@@ -102,7 +72,10 @@ function Cropper(props: Props) {
                     onLoad={() => setImageLoaded(true)}
                     alt={config.imageAlt}
                 />
-                <div style={config.styles.cropPolygon}>{handles}</div>
+
+                <div style={{ ...config.styles.cropPolygon, ...crop }}>
+                    {handles}
+                </div>
             </div>
         </div>
     )

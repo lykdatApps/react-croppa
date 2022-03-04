@@ -2,22 +2,23 @@ class CropperConfig implements ICropperConfig {
     handleConfig: ICropperConfig['handleConfig']
     styles: CropperStyles
     imageAlt: string
-    cropSpec: Dimensions
-    imageSpec: Dimensions
+    zeroDimensions: Dimensions
     hint: string
+    minCrop: number
     theme = {
         size: { small: '8px', medium: '16px', large: '32px' },
         space: { small: '8px', medium: '16px', large: '32px' },
         color: { white: '#fff', grayDark: '#232323' }
     }
     constructor() {
+        this.minCrop = 30
         this.handleConfig = {
             edges: ['top', 'right', 'left', 'bottom'],
-            height: 20,
-            width: 20
+            height: 10,
+            width: 10
         }
         this.imageAlt = 'Image to crop'
-        this.cropSpec = {
+        this.zeroDimensions = {
             top: 0,
             left: 0,
             height: 0,
@@ -28,10 +29,10 @@ class CropperConfig implements ICropperConfig {
                 common: {
                     inner: {
                         touchAction: 'none',
-                        background: this.theme.color.white,
-                        border: `3px solid ${this.theme.color.grayDark}`,
-                        borderRadius: '50%',
-                        cursor: 'grab'
+                        background: this.theme.color.grayDark,
+                        cursor: 'grab',
+                        height: this.handleConfig.height,
+                        width: this.handleConfig.width
                     },
                     outer: {
                         display: 'flex',
@@ -41,56 +42,40 @@ class CropperConfig implements ICropperConfig {
                     }
                 },
                 top: {
-                    inner: {
-                        top: '-100%',
-                        left: '50%',
-                        transform: 'translateX(-50%)'
-                    },
+                    inner: {},
                     outer: {
-                        top: `-${parseInt(this.theme.size.large) / 2}px`,
                         left: 0,
                         right: 0,
+                        transform: 'translateY(-50%)',
                         height: this.theme.size.large
                     }
                 },
                 left: {
-                    inner: {
-                        left: '-100%',
-                        top: '50%',
-                        transform: 'translateY(-50%)'
-                    },
+                    inner: {},
                     outer: {
-                        left: `-${parseInt(this.theme.size.large) / 2}px`,
                         top: 0,
                         bottom: 0,
+                        transform: 'translateX(-50%)',
                         width: this.theme.size.large
                     }
                 },
                 bottom: {
-                    inner: {
-                        bottom: '-100%',
-                        left: '50%',
-                        transform: 'translateX(-50%)'
-                    },
+                    inner: {},
                     outer: {
-                        bottom: `-${parseInt(this.theme.size.large) / 2}px`,
                         left: 0,
                         right: 0,
+                        top: '100%',
+                        transform: 'translateY(-50%)',
                         height: this.theme.size.large
                     }
                 },
                 right: {
-                    inner: {
-                        left: '100%',
-                        top: '50%',
-                        transform: 'translateY(-50%)'
-                    },
+                    inner: {},
                     outer: {
                         bottom: 0,
                         top: 0,
-                        left: `calc(100% - ${
-                            parseInt(this.theme.size.large) / 2
-                        }px)`,
+                        left: '100%',
+                        transform: 'translateX(-50%)',
                         width: this.theme.size.large
                     }
                 }
@@ -103,11 +88,7 @@ class CropperConfig implements ICropperConfig {
             },
             cropPolygon: {
                 position: 'absolute',
-                top: '50%',
-                left: '50%',
                 background: 'transparent',
-                height: '80px',
-                width: '90px',
                 boxShadow: `10px 10px 200vw 200vh rgba(255,255,255,0.6)`
             },
             container: {
@@ -119,7 +100,6 @@ class CropperConfig implements ICropperConfig {
                 marginBottom: this.theme.space.medium
             }
         }
-        this.imageSpec = this.cropSpec
         this.hint = 'Drag to crop'
     }
 }

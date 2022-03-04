@@ -1,12 +1,11 @@
 {
     "compilerOptions": {
-        "target": "es5",
+        "target": "es6",
         "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "noEmit": true,
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "module": "esnext",
@@ -17,5 +16,10 @@
         "outDir": "./dist"
     },
     "include": ["./src/**/*.ts", "./src/**/*.tsx"],
-    "exclude": ["node_modules"]
+    "exclude": [
+        "node_modules",
+        "**/__tests__/*",
+        "examples",
+        "rollup.config.js"
+    ]
 }

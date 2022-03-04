@@ -21,7 +21,6 @@ export const CropHandles: React.FC<Props> = (props) => {
                 return (
                     <div
                         key={edge}
-                        className={`cropHandleContainer cropHandleContainer-${edge}`}
                         style={{ ...styles.common.outer, ...outer }}
                         onTouchEnd={onDrop}
                         onTouchStart={onEdgeGrab(edge)}

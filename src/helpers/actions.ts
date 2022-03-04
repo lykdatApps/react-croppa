@@ -1,17 +1,16 @@
+import { Dispatch, SetStateAction, MouseEvent, TouchEvent } from 'react'
 import { getClientPosition } from './getters'
 import { setCropByCase } from './setters'
 
 export function drag(
-    evt: React.MouseEvent | React.TouchEvent,
-    cropperDimensions: Dimensions | null,
-    activeCropEdge: string,
+    evt: MouseEvent | TouchEvent,
+    cropperDimensions: Dimensions,
+    activeEdge: string,
     imageSpec: Dimensions,
-    halfHandle: number,
     crop: Dimensions,
-    tripleHandle: number,
-    setCrop: React.Dispatch<React.SetStateAction<Dimensions>>
+    setCrop: Dispatch<SetStateAction<Dimensions>>
 ): void {
-    if (!cropperDimensions) {
+    if (!cropperDimensions || !imageSpec || !crop) {
         return
     }
     // What needs to be done is to listen for mouse move event on the document
@@ -19,31 +18,22 @@ export function drag(
     // be at the boundary
     evt.preventDefault()
     evt.stopPropagation()
-    if (!activeCropEdge) {
+    if (!activeEdge) {
         return
     }
     let [clientX, clientY] = getClientPosition(evt)
     clientX -= cropperDimensions.left
     clientY -= cropperDimensions.top
-    setCropByCase(
-        activeCropEdge,
-        imageSpec,
-        halfHandle,
-        crop,
-        tripleHandle,
-        clientX,
-        clientY,
-        setCrop
-    )
+    setCropByCase(activeEdge, imageSpec, clientX, clientY, setCrop)
 }
 
 export function dragFrom(
     edge: string,
-    setActiveCropEdge: React.Dispatch<React.SetStateAction<string>>
-): (evt: React.MouseEvent | React.TouchEvent) => void {
-    return (evt: React.MouseEvent | React.TouchEvent) => {
+    setActiveEdge: Dispatch<SetStateAction<string>>
+): (evt: MouseEvent | TouchEvent) => void {
+    return (evt: MouseEvent | TouchEvent) => {
         evt.preventDefault()
         evt.stopPropagation()
-        setActiveCropEdge(edge)
+        setActiveEdge(edge)
     }
 }

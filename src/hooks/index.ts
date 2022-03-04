@@ -1,4 +1,4 @@
 import { useElementDimensions } from './useElementDimensions'
-import { useScaledImage } from './useScaledImage'
+import { useLoadedImage } from './useLoadedImage'
 
-export { useElementDimensions, useScaledImage }
+export { useElementDimensions, useLoadedImage }
