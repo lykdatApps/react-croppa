@@ -2,6 +2,12 @@
 
 Simple React cropper component
 
+## Installation
+
+```
+npm i react-croppa
+```
+
 ## Usage
 
 For image uploads
