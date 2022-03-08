@@ -1,4 +1,5 @@
 import { config } from '../config'
+import { Dimensions, CropperOutput } from '../types'
 
 export function setTop(
     limitFirstVal: number,

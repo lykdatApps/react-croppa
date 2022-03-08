@@ -1,10 +1,12 @@
-type Edge = 'left' | 'right' | 'top' | 'bottom'
+import { CSSProperties } from 'react'
 
-type ElementLayer = 'inner' | 'outer'
+export type Edge = 'left' | 'right' | 'top' | 'bottom'
 
-type HandleStyle = Record<ElementLayer, CSSProperties>
+export type ElementLayer = 'inner' | 'outer'
 
-interface CropperStyles {
+export type HandleStyle = Record<ElementLayer, CSSProperties>
+
+export interface CropperStyles {
     handles: {
         common: HandleStyle
         left: HandleStyle
@@ -17,7 +19,7 @@ interface CropperStyles {
     container: CSSProperties
 }
 
-interface ICropperConfig {
+export interface ICropperConfig {
     minCrop: number
     handleConfig: {
         edges: Array<Edge>
@@ -30,33 +32,33 @@ interface ICropperConfig {
     hint: string
 }
 
-interface ScaleDimensions {
+export interface ScaleDimensions {
     height: number
     width: number
     isFullHeight?: boolean
     isFullWidth?: boolean
 }
 
-type SourceMeasurement = number
-type DestMeasurement = number
+export type SourceMeasurement = number
+export type DestMeasurement = number
 
-type ScaleSpec = Record<
+export type ScaleSpec = Record<
     'height' | 'width',
     [SourceMeasurement, DestMeasurement]
 >
 
-interface Dimensions extends ScaleDimensions {
+export interface Dimensions extends ScaleDimensions {
     top: number
     left: number
 }
 
-interface BoundingBox {
+export interface BoundingBox {
     top: number
     bottom: number
     left: number
     right: number
 }
-interface CropperOutput {
+export interface CropperOutput {
     boundingBox?: BoundingBox
     imageUrl: string
 }

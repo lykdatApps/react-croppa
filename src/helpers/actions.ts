@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, MouseEvent, TouchEvent } from 'react'
+import { Dimensions } from '../types'
 import { getClientPosition } from './getters'
 import { setCropByCase } from './setters'
 

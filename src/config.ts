@@ -1,3 +1,5 @@
+import { ICropperConfig, CropperStyles, Dimensions } from './types'
+
 class CropperConfig implements ICropperConfig {
     handleConfig: ICropperConfig['handleConfig']
     styles: CropperStyles

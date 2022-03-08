@@ -1,3 +1,11 @@
+import {
+    ScaleSpec,
+    Dimensions,
+    CropperStyles,
+    Edge,
+    HandleStyle
+} from '../types'
+
 export function validateFileSize(file: File): {
     isValid: boolean
     message?: string

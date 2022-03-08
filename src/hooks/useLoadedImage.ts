@@ -6,6 +6,7 @@ import {
     MutableRefObject
 } from 'react'
 import { config } from '../config'
+import { Dimensions, ScaleSpec } from '../types'
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock'
 import { resizeImage } from '../helpers/image'
 import { useElementDimensions } from './useElementDimensions'

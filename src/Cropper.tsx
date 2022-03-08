@@ -7,7 +7,7 @@ import { CropHandles } from './CropHandleGroup'
 
 export interface Props {
     imageUrl: string
-    onCropComplete: (cropped: CropperOutput) => void
+    onCropComplete: (cropped: Blob) => void
     readyToUse: boolean
 }
 

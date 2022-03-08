@@ -1,5 +1,6 @@
 import React from 'react'
 import { getHandleStyle } from './helpers/utils'
+import { CropperStyles, Edge } from './types'
 
 export interface Props {
     styles: CropperStyles['handles']

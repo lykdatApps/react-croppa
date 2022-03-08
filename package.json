@@ -3,7 +3,7 @@
     "version": "1.0.1",
     "description": "Simple react component for cropping images.",
     "main": "./dist/index.js",
-    "types": "./src/@types/index.d.ts",
+    "types": "./dist/index.d.ts",
     "scripts": {
         "test": "jest --config jestconfig.json",
         "build": "rollup -c",

@@ -1,5 +1,6 @@
 import { setBoundingBox } from './setters'
 import { adjustPosition } from './utils'
+import { Dimensions, CropperOutput, ScaleSpec } from '../types'
 
 export function createImage(url: string, setCors = true) {
     return new Promise((resolve: (value: HTMLImageElement) => void, reject) => {
@@ -65,11 +66,14 @@ export async function finishCropping(
     imageUrl: string,
     cropSpec: Dimensions,
     imageSpec: Dimensions,
-    onCropComplete: (cropped: any) => any
+    onCropComplete: (cropped: Blob) => any
 ): Promise<void> {
     const imageData: CropperOutput = { imageUrl }
     setBoundingBox(imageData, cropSpec, imageSpec)
     const cropped = await crop(imageUrl, cropSpec, imageSpec)
+    if (!cropped) {
+        return
+    }
     onCropComplete(cropped)
 }
 

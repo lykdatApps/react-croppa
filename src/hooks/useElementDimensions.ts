@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { deepEqual } from '../helpers/utils'
 import { config } from '../config'
+import { Dimensions } from '../types'
 
 /**
  *
