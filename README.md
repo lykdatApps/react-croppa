@@ -21,3 +21,10 @@ For image uploads
     readyToUse={true | false}
 />
 ```
+
+
+`imageUrl`: url for the image that needs to be cropped.
+
+`onCropComplete`: callback function that uses the cropped image.
+
+`readyToUse`: condition that lets the cropper know that the user is done manipulating the image boundaries. When this value changes to `true`, the cropper executes the callback function.
