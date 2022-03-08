@@ -27,4 +27,4 @@ For image uploads
 
 `onCropComplete`: callback function that uses the cropped image.
 
-`readyToUse`: condition that lets the cropper know that the user is done manipulating the image boundaries. When this value changes to `true`, the cropper executes the callback function.
+`readyToUse`: condition that lets the cropper know that the user is done manipulating the image boundaries. When this value changes to `true`, the actual image cropping will happen and the callback function will be executed.
