@@ -30,6 +30,7 @@ class CropperConfig implements ICropperConfig {
             handles: {
                 common: {
                     inner: {
+                        display: 'flex',
                         touchAction: 'none',
                         background: this.theme.color.grayDark,
                         cursor: 'grab',
