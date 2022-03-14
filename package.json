@@ -1,6 +1,6 @@
 {
     "name": "react-croppa",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Simple react component for cropping images.",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
