@@ -94,6 +94,7 @@ class CropperConfig implements ICropperConfig {
                 boxShadow: `10px 10px 200vw 200vh rgba(255,255,255,0.6)`
             },
             container: {
+                display: 'flex',
                 height: '30vh',
                 width: '100%',
                 position: 'relative',
